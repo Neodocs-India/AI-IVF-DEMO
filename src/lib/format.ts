@@ -22,3 +22,16 @@ export function greeting(d: Date = DEMO_NOW) {
   if (h < 17) return 'Good afternoon';
   return 'Good evening';
 }
+
+const inr = new Intl.NumberFormat('en-IN', { maximumFractionDigits: 0 });
+const num = new Intl.NumberFormat('en-IN');
+
+/** ₹1,42,00,000 */
+export const formatINR = (v: number) => `₹${inr.format(Math.round(v))}`;
+/** ₹1.42 Cr */
+export const formatCrore = (v: number) => `₹${(v / 1e7).toFixed(2)} Cr`;
+/** ₹2.4 lakh / ₹85,000 */
+export const formatShortINR = (v: number) => (v >= 100_000 ? `₹${(v / 100_000).toFixed(v % 100_000 === 0 ? 0 : 2).replace(/\.?0+$/, '')} lakh` : formatINR(v));
+/** 2,140 */
+export const formatNum = (v: number) => num.format(v);
+export const pct = (v: number, digits = 0) => `${v.toFixed(digits)}%`;
